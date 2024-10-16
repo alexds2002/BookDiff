@@ -24,6 +24,8 @@ The solution should scale to larger books than the sample data shows.           
 The solution should maintain a ‘best price’ for each side (bids & asks).                                               <>
 *                                                                                                                      <>
                                                                                                                        <>
+Tracking the prices with unordered_map would give constant insertion and deletion but would add more complexity for    <>
+tracking the max/min elements. On top of that the data will not be sorted. For that reason i will use std::map.        <>
 ><======================================================< NOTES >======================================================><
 
 <>======================================================< KEY REQUIREMENTS >======================================================<>
