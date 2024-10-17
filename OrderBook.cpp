@@ -2,6 +2,11 @@
 
 #include <iostream>
 
+PriceBook::PriceBook(const nlohmann::json& snapshotJson)
+{
+    ProcessSnapshot(snapshotJson);
+}
+
 // Can be used to resync
 void PriceBook::ProcessSnapshot(const nlohmann::json& snapshotJson)
 {
@@ -58,7 +63,6 @@ void PriceBook::ProcessDiffUpdate(const nlohmann::json& updateJson)
         std::cerr << "Missed updates, resynchronization required!" << std::endl;
         // call ProccessSnapshot or exit the program
     }
-
 }
 
 void PriceBook::UpdateBids(double price, double quantity)
