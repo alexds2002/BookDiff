@@ -6,6 +6,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Manualy add new files
 set(SOURCES main.cpp
+            OrderBook.cpp
+            OrderBook.h
             include/json.hpp
             )
 
