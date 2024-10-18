@@ -8,6 +8,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(SOURCES main.cpp
             PricePointBook/OrderBook.cpp
             PricePointBook/OrderBook.h
+            PricePointBook/PriceBook.cpp
+            PricePointBook/PriceBook.h
             Include/json.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
