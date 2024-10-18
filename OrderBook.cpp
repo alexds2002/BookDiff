@@ -2,24 +2,24 @@
 
 #include <iostream>
 
-PriceBook::PriceBook(const nlohmann::json& snapshotJson)
+// asuming that the snapshot contains the Symbol, else we have to get it from somewhere else
+OrderBook::OrderBook(const nlohmann::json& snapshotJson)
 {
     ProcessSnapshot(snapshotJson);
 }
 
 // Can be used to resync
-void PriceBook::ProcessSnapshot(const nlohmann::json& snapshotJson)
+void OrderBook::ProcessSnapshot(const nlohmann::json& snapshotJson)
 {
-    // Clear existing bids and asks
-    m_bids.clear();
-    m_asks.clear();
-
+    std::string msgSymbol = snapshotJson["s"];
+    PriceBook& curPriceBook = m_priceBooks[msgSymbol];
+    curPriceBook.ClearPrices();
     // Process bids
     for (const auto& bid : snapshotJson["bids"])
     {
         double price = std::stod(bid[0].get<std::string>());
         double quantity = std::stod(bid[1].get<std::string>());
-        UpdateBids(price, quantity);
+        curPriceBook.UpdateBids(price, quantity);
     }
 
     // Process asks
@@ -27,24 +27,27 @@ void PriceBook::ProcessSnapshot(const nlohmann::json& snapshotJson)
     {
         double price = std::stod(ask[0].get<std::string>());
         double quantity = std::stod(ask[1].get<std::string>());
-        UpdateAsks(price, quantity);
+        curPriceBook.UpdateAsks(price, quantity);
     }
 }
 
-void PriceBook::ProcessDiffUpdate(const nlohmann::json& updateJson)
+void OrderBook::ProcessDiffUpdate(const nlohmann::json& updateJson)
 {
+    std::string msgSymbol = updateJson["s"];
+    PriceBook& curPriceBook = m_priceBooks[msgSymbol];
+
     // Ensure updates are applied sequentially using update IDs
     int firstUpdateId = updateJson["U"];
     int lastUpdateIdInMsg = updateJson["u"];
 
-    if (firstUpdateId <= m_lastUpdateId + 1)
+    if (firstUpdateId <= curPriceBook.GetLastUpdateID() + 1)
     {
         // Update all bids
         for (const auto& bid : updateJson["b"])
         {
             double price = std::stod(bid[0].get<std::string>());
             double quantity = std::stod(bid[1].get<std::string>());
-            UpdateBids(price, quantity);
+            curPriceBook.UpdateBids(price, quantity);
         }
 
         // Update all asks
@@ -52,11 +55,11 @@ void PriceBook::ProcessDiffUpdate(const nlohmann::json& updateJson)
         {
             double price = std::stod(ask[0].get<std::string>());
             double quantity = std::stod(ask[1].get<std::string>());
-            UpdateAsks(price, quantity);
+            curPriceBook.UpdateAsks(price, quantity);
         }
 
         // Update the last processed update ID
-        m_lastUpdateId = lastUpdateIdInMsg;
+        curPriceBook.SetLastUpdateID(lastUpdateIdInMsg);
     }
     else
     {
@@ -87,6 +90,23 @@ void PriceBook::UpdateAsks(double price, double quantity)
     {
         m_asks[price] = quantity; // Update or insert the ask
     }
+}
+
+void PriceBook::SetLastUpdateID(int id)
+{
+    m_lastUpdateId = id;
+}
+
+int PriceBook::GetLastUpdateID() const
+{
+    return m_lastUpdateId;
+}
+
+// Clear existing bids and asks
+void PriceBook::ClearPrices()
+{
+    m_bids.clear();
+    m_asks.clear();
 }
 
 // for debug purposes

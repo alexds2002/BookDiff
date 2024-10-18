@@ -18,6 +18,8 @@ Add sanitaizer(use static and dynamic tools)                                    
 My Assumptions:                                                                                                        <>
 1. The events(Book diff) from the Binance book dept stream are in a specific format.                                   <>
 2. I will need to track both bid and ask prices, with each side being ordered.                                         <>
+3. The updates are absolute values, so the new update is the new value i need to place                                 <>
+4. The snapshot contains the Symbol, otherwise we have to get it from somewhere else                                   <>
 *                                                                                                                      <>
 The solution should maintain the two sides of the book in order.                                                       <>
 The solution should scale to larger books than the sample data shows.                                                  <>
