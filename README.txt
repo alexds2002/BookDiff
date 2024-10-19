@@ -1,51 +1,52 @@
-<>======================================================< HOW TO BUILD >======================================================<>
-                                                                                                                              <>
-Minimum requirements:                                                                                                         <>
-cmake version 3.16                                                                                                            <>
-gcc 9.4.0                                                                                                                     <>
-                                                                                                                              <>
-How to build:                                                                                                                 <>
-mkdir build && cmake -G "Unix Makefiles" .. && make -j4                                                                       <>
-                                                                                                                              <>
-><======================================================< HOW TO BUILD >======================================================><
+<>=======================================< HOW TO BUILD >=======================================<>
+                                                                                                <>
+Minimum requirements:                                                                           <>
+cmake version 3.16                                                                              <>
+gcc 9.4.0                                                                                       <>
+                                                                                                <>
+How to build:                                                                                   <>
+mkdir build && cmake -G "Unix Makefiles" .. && make -j4                                         <>
+                                                                                                <>
+><=======================================< HOW TO BUILD >=======================================><
 
-<>======================================================< NOTES >======================================================<>
-                                                                                                                       <>
-TODO after:                                                                                                            <>
-Unit testing                                                                                                           <>
-Add sanitaizer(use static and dynamic tools)                                                                           <>
-                                                                                                                       <>
-My Assumptions:                                                                                                        <>
-1. The events(Book diff) from the Binance book dept stream are in a specific format.                                   <>
-2. I will need to track both bid and ask prices, with each side being ordered.                                         <>
-3. The updates are absolute values, so the new update is the new value i need to place                                 <>
-4. The snapshot contains the Symbol, otherwise we have to get it from somewhere else                                   <>
-*                                                                                                                      <>
-The solution should maintain the two sides of the book in order.                                                       <>
-The solution should scale to larger books than the sample data shows.                                                  <>
-The solution should maintain a ‘best price’ for each side (bids & asks).                                               <>
-*                                                                                                                      <>
-                                                                                                                       <>
-Tracking the prices with unordered_map would give constant insertion and deletion but would add more complexity for    <>
-tracking the max/min elements. On top of that the data will not be sorted. For that reason i will use std::map.        <>
-><======================================================< NOTES >======================================================><
+<>=================================================< NOTES >=================================================<>
+                                                                                                             <>
+TODO after:                                                                                                  <>
+Unit testing                                                                                                 <>
+Add sanitaizer(use static and dynamic tools)                                                                 <>
+                                                                                                             <>
+My Assumptions:                                                                                              <>
+1. The events(Book diff) from the Binance book dept stream are in a specific format.                         <>
+2. I will need to track both bid and ask prices, with each side being ordered.                               <>
+3. The updates are absolute values, so the new update is the new value i need to place                       <>
+4. The snapshot contains the Symbol, otherwise we have to get it from somewhere else                         <>
+*                                                                                                            <>
+The solution should maintain the two sides of the book in order.                                             <>
+The solution should scale to larger books than the sample data shows.                                        <>
+The solution should maintain a ‘best price’ for each side (bids & asks).                                     <>
+*                                                                                                            <>
+                                                                                                             <>
+Tracking the prices with unordered_map would give constant insertion and deletion                            <>
+but would add more complexity for tracking the max/min elements.                                             <>
+On top of that the data will not be sorted. For that reason i will use std::map.                             <>
+><=================================================< NOTES >=================================================><
 
-<>======================================================< KEY REQUIREMENTS >======================================================<>
-                                                                                                                                  <>
-Maintain Two Sides of the Book (Bids and Asks):                                                                                   <>
-You'll need to track both bid and ask prices, with each side being ordered.                                                       <>
-Efficient Updates:                                                                                                                <>
-Price levels should be added, updated, or removed based on incoming events.                                                       <>
-Need to efficiently handle updates like setting quantities to zero, which removes the price point.                                <>
-Best Price Tracking:                                                                                                              <>
-Constantly track and maintain the best bid (highest bid price) and best ask (lowest ask price).                                   <>
-Scalability:                                                                                                                      <>
-Support a large number of books (1000-2000 symbols).                                                                              <>
-Test Suite & Benchmarking:                                                                                                        <>
-Write tests to ensure the solution is correct.                                                                                    <>
-Implement benchmarks to measure performance (latency and memory usage).                                                           <>
-                                                                                                                                  <>
-><======================================================< KEY REQUIREMENTS >======================================================><
+<>=================================================< KEY REQUIREMENTS >=================================================<>
+                                                                                                                        <>
+Maintain Two Sides of the Book (Bids and Asks):                                                                         <>
+You'll need to track both bid and ask prices, with each side being ordered.                                             <>
+Efficient Updates:                                                                                                      <>
+Price levels should be added, updated, or removed based on incoming events.                                             <>
+Need to efficiently handle updates like setting quantities to zero, which removes the price point.                      <>
+Best Price Tracking:                                                                                                    <>
+Constantly track and maintain the best bid (highest bid price) and best ask (lowest ask price).                         <>
+Scalability:                                                                                                            <>
+Support a large number of books (1000-2000 symbols).                                                                    <>
+Test Suite & Benchmarking:                                                                                              <>
+Write tests to ensure the solution is correct.                                                                          <>
+Implement benchmarks to measure performance (latency and memory usage).                                                 <>
+                                                                                                                        <>
+><=================================================< KEY REQUIREMENTS >=================================================><
 
 <>======================================================< OBJECTIVE >======================================================<>
                                                                                                                            <>

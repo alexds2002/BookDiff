@@ -11,6 +11,8 @@ public:
     void UpdateAsks(double price, double quantity);
     void SetLastUpdateID(int id);
     int GetLastUpdateID() const;
+    double GetBestAsk() const;
+    double GetBestBid() const;
     void ClearPrices();
     void PrintOrderBook() const; // for debug purposes
 

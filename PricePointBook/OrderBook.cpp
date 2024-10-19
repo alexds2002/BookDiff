@@ -40,7 +40,9 @@ void OrderBook::ProcessDiffUpdate(const nlohmann::json& updateJson)
     int firstUpdateId = updateJson["U"];
     int lastUpdateIdInMsg = updateJson["u"];
 
-    if (firstUpdateId <= curPriceBook.GetLastUpdateID() + 1)
+    int lastID = curPriceBook.GetLastUpdateID();
+
+    if (firstUpdateId <= lastID + 1 || lastID == -1)
     {
         // Update all bids
         for (const auto& bid : updateJson["b"])
@@ -66,5 +68,12 @@ void OrderBook::ProcessDiffUpdate(const nlohmann::json& updateJson)
         std::cerr << "Missed updates, resynchronization required!" << std::endl;
         // call ProccessSnapshot or exit the program
     }
+}
+
+// return ptr to the price book with assosiated symbol
+PriceBook* OrderBook::GetPriceBook(const std::string& symbol)
+{
+    if(m_priceBooks.count(symbol) == 0) return nullptr;
+    return &m_priceBooks[symbol];
 }
 

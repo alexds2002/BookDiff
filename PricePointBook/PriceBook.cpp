@@ -36,6 +36,18 @@ int PriceBook::GetLastUpdateID() const
     return m_lastUpdateId;
 }
 
+double GetBestAsk() const
+{
+    if(!m_asks.empty()) { return m_asks.begin()->first; }
+    return 0.0;
+}
+
+double GetBestBid() const
+{
+    if(!m_bids.empty()) { return m_bids.begin()->first; }
+    return 0.0;
+}
+
 // Clear existing bids and asks
 void PriceBook::ClearPrices()
 {
