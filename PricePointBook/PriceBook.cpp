@@ -48,6 +48,18 @@ double PriceBook::GetBestBid() const
     return 0.0;
 }
 
+double PriceBook::GetBestAskQuantity() const
+{
+    if(!m_asks.empty()) { return m_asks.begin()->second; }
+    return 0.0;
+}
+
+double PriceBook::GetBestBidQuantity() const
+{
+    if(!m_bids.empty()) { return m_bids.begin()->second; }
+    return 0.0;
+}
+
 // Clear existing bids and asks
 void PriceBook::ClearPrices()
 {

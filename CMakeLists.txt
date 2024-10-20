@@ -13,6 +13,7 @@ set(SOURCES main.cpp
             PricePointBook/PriceBook.cpp
             PricePointBook/PriceBook.h
             Include/json.hpp
+            Include/unit_test.h
             Include/benchmark_component.h)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
