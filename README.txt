@@ -3,8 +3,12 @@
 Minimum requirements:                                                                           <>
 cmake version 3.16                                                                              <>
 gcc 9.4.0                                                                                       <>
+Python 2.7.18 or any older                                                                      <>
                                                                                                 <>
-How to build:                                                                                   <>
+Execute the following script from the root of the project:                                      <>
+python BuildAndRun.py                                                                           <>
+                                                                                                <>
+Or build manually:                                                                              <>
 mkdir build && cmake -G "Unix Makefiles" .. && make -j4                                         <>
                                                                                                 <>
 ><=======================================< HOW TO BUILD >=======================================><
