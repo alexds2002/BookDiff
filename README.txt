@@ -1,6 +1,6 @@
 <>=======================================< HOW TO BUILD >=======================================<>
                                                                                                 <>
-Minimum requirements:                                                                           <>
+Requirements:                                                                                   <>
 cmake version 3.16                                                                              <>
 gcc 9.4.0                                                                                       <>
 Python 2.7.18 or any older                                                                      <>
