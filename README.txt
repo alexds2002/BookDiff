@@ -9,7 +9,7 @@ Execute the following script from the root of the project:                      
 python BuildAndRun.py                                                                           <>
                                                                                                 <>
 Or build manually:                                                                              <>
-mkdir build && cmake -G "Unix Makefiles" .. && make -j4                                         <>
+mkdir build && cd build && cmake -G "Unix Makefiles" .. && make -j4                             <>
                                                                                                 <>
 ><=======================================< HOW TO BUILD >=======================================><
 
